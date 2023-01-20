@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -568,27 +570,24 @@ namespace Wasmtime
 
         internal unsafe static IntPtr InvokeCallback(Delegate callback, MethodInfo callbackInvokeMethod, IntPtr callerPtr, bool passCaller, Value* args, int nargs, Value* results, int nresults, IReadOnlyList<ValueKind> resultKinds, bool returnsTuple)
         {
+            if (passCaller)
+                throw new NotSupportedException("Cannot have a `Caller` parameter in this callback");
+
             try
             {
-                using var caller = new Caller(callerPtr);
+                var store = new CallerStore(callerPtr);
 
-                var offset = passCaller ? 1 : 0;
-                var invokeArgs = new object?[nargs + offset];
+                var invokeArgs = new object?[nargs];
 
-                if (passCaller)
-                {
-                    invokeArgs[0] = caller;
-                }
-
-                var invokeArgsSpan = new Span<object?>(invokeArgs, offset, nargs);
+                var invokeArgsSpan = new Span<object?>(invokeArgs, 0, nargs);
                 for (int i = 0; i < invokeArgsSpan.Length; ++i)
                 {
-                    invokeArgsSpan[i] = args[i].ToObject(caller);
+                    invokeArgsSpan[i] = args[i].ToObject(store);
                 }
 
                 // NOTE: reflection is extremely slow for invoking methods. in the future, perhaps this could be replaced with
                 // source generators, system.linq.expressions, or generate IL with DynamicMethods or something
-                var result = callbackInvokeMethod.Invoke(callback, BindingFlags.DoNotWrapExceptions, null, invokeArgs, null);
+                var result = callbackInvokeMethod.Invoke(callback, BindingFlags.DoNotWrapExceptions, null, invokeArgs, CultureInfo.CurrentCulture);
 
                 if (returnsTuple)
                 {
