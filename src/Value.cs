@@ -397,7 +397,13 @@ namespace Wasmtime
             public static extern nuint wasmtime_externref_to_raw(IntPtr context, IntPtr externref);
         }
 
-        public static readonly Native.Finalizer Finalizer = (p) => GCHandle.FromIntPtr(p).Free();
+        internal static readonly Native.Finalizer Finalizer = FinalizerImpl;
+
+        [NativeCallback(typeof(Native.Finalizer))]
+        private static void FinalizerImpl(nint p)
+        {
+            GCHandle.FromIntPtr(p).Free();
+        }
 
         private ValueKind kind;
         private ValueUnion of;

@@ -304,7 +304,13 @@ namespace Wasmtime
 
         private object? data;
 
-        private static readonly Native.Finalizer Finalizer = (p) => GCHandle.FromIntPtr(p).Free();
+        private static readonly Native.Finalizer Finalizer = FinalizerImpl;
+
+        [NativeCallback(typeof(Native.Finalizer))]
+        private static void FinalizerImpl(nint p)
+        {
+            GCHandle.FromIntPtr(p).Free();
+        }
 
         private readonly ConcurrentDictionary<(ExternKind kind, ulong store, nuint index), object> _externCache = new();
 

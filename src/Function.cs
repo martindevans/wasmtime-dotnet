@@ -748,7 +748,14 @@ namespace Wasmtime
 
         internal readonly Store? store;
         internal readonly ExternFunc func;
-        internal static readonly Native.Finalizer Finalizer = (p) => GCHandle.FromIntPtr(p).Free();
+
+        internal static readonly Native.Finalizer Finalizer = FinalizerImpl;
+
+        [NativeCallback(typeof(Native.Finalizer))]
+        private static void FinalizerImpl(nint p)
+        {
+            GCHandle.FromIntPtr(p).Free();
+        }
 
         /// <summary>
         /// Contains the cause for a error returned by invoking a wasm function, in case
