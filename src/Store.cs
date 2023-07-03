@@ -70,6 +70,14 @@ namespace Wasmtime
             return fuel;
         }
 
+        internal ulong? GetRemainingFuel()
+        {
+            if (!Native.wasmtime_context_fuel_remaining(handle, out var fuel))
+                return null;
+
+            return fuel;
+        }
+
         internal void SetWasiConfiguration(WasiConfiguration config)
         {
             var wasi = config.Build();
@@ -114,6 +122,9 @@ namespace Wasmtime
 
             [DllImport(Engine.LibraryName)]
             public static extern IntPtr wasmtime_context_get_data(IntPtr handle);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern bool wasmtime_context_fuel_remaining(IntPtr handle, out ulong fuel);
         }
 
         internal readonly IntPtr handle;
@@ -251,6 +262,17 @@ namespace Wasmtime
         public ulong GetConsumedFuel()
         {
             var result = Context.GetConsumedFuel();
+            System.GC.KeepAlive(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the remaining amount of fuel.
+        /// </summary>
+        /// <returns>Returns the fuel available, or null if fuel consumption is not enabled.</returns>
+        public ulong? GetRemainingFuel()
+        {
+            var result = Context.GetRemainingFuel();
             System.GC.KeepAlive(this);
             return result;
         }

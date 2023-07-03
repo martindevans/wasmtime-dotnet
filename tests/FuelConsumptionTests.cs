@@ -67,6 +67,21 @@ namespace Wasmtime.Tests
         }
 
         [Fact]
+        public void ConsumedFuelIsMeasured()
+        {
+            Store.AddFuel(1000UL);
+            Store.GetRemainingFuel().Should().Be(1000UL);
+
+            // Artifically consume some fuel
+            var remaining = Store.ConsumeFuel(250UL);
+            remaining.Should().Be(750UL);
+
+            // Check that this method measures the same value
+            var remaining2 = Store.GetRemainingFuel();
+            remaining2.Should().Be(750UL);
+        }
+
+        [Fact]
         public void ItCanConsumeZeroFuel()
         {
             Store.AddFuel(1000UL);
