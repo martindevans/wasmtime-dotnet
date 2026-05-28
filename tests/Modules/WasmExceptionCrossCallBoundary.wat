@@ -1,5 +1,7 @@
 (module
 	(import "env" "cs_test" (func $cs_test (result i32)))
+	(import "env" "cs_test_catch" (func $cs_test_catch (result i32)))
+	(import "env" "cs_test_rethrow" (func $cs_test_rethrow (result i32)))
 
 	(tag $my_error (export "my_error") (param i32))
 
@@ -39,6 +41,23 @@
 		;; If it works; We'll return (111), which is what $throw gives to $my_error tag when throwing. 
 		;; If C# catches it; We'll get (222).
 		;; Otherwise we'll get unreachable or C# will get WasmException
+
+		(return)
+	)
+
+	(func $run_cs_catch (export "run_cs_catch") (result i32)
+        (call $cs_test_catch)
+        (return)
+	)
+
+	(func $run_cs_rethrow (export "run_cs_rethrow") (result i32)
+		(block $handler (result i32)
+			(try_table (catch $my_error $handler)
+				(call $cs_test_rethrow)
+				(return)
+			)
+			(unreachable)
+		)
 
 		(return)
 	)
