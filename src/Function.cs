@@ -237,7 +237,7 @@ namespace Wasmtime
                 try
                 {
                     if (Native.wasmtime_context_take_exception(storeContext.handle, out var exception))
-                        throw WasmException.FromTrapAndException(trap, exception);
+                        throw WasmException.FromTrapAndException(storeContext, trap, exception);
 
                     throw TrapException.FromOwnedTrap(trap);
                 }
@@ -335,7 +335,7 @@ namespace Wasmtime
                     try
                     {
                         if (Native.wasmtime_context_take_exception(store.Context.handle, out var exception))
-                            throw WasmException.FromTrapAndException(trap, exception);
+                            throw WasmException.FromTrapAndException(store.Context, trap, exception);
 
                         throw TrapException.FromOwnedTrap(trap);
                     }
@@ -711,14 +711,18 @@ namespace Wasmtime
             }
             catch (Exception ex)
             {
-                return HandleCallbackException(ex);
+                return HandleCallbackException(ex, new Caller(callerPtr));
             }
         }
 
-        internal static unsafe IntPtr HandleCallbackException(Exception ex)
+        internal static unsafe IntPtr HandleCallbackException(Exception ex, Caller caller)
         {
             try
             {
+                if (ex is WasmException wex) {
+                    return Native.wasmtime_context_set_exception(caller.context.handle, wex.Exn);
+                }
+
                 // Store the exception as error cause, so that we can use it as the WasmtimeException's
                 // InnerException when the error bubbles up to the next host-to-wasm transition.
                 // If the exception is already a WasmtimeException, we use that one's InnerException,
@@ -793,6 +797,15 @@ namespace Wasmtime
 
             [DllImport(Engine.LibraryName)]
             public static extern unsafe IntPtr wasmtime_trap_new(byte* bytes, nuint len);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_exn_delete(IntPtr exn);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern ulong wasmtime_exn_field_count(IntPtr contex, IntPtr exn);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasmtime_exn_field(IntPtr contex, IntPtr exn, ulong index, out Value value);
             
             [DllImport(Engine.LibraryName)]
             [return: MarshalAs(UnmanagedType.U1)]
@@ -800,11 +813,10 @@ namespace Wasmtime
 
             [DllImport(Engine.LibraryName)]
             [return: MarshalAs(UnmanagedType.U1)]
-            public static extern bool wasmtime_context_take_exception(IntPtr context, out ExnRef exnRef);
-
+            public static extern bool wasmtime_context_take_exception(IntPtr context, out IntPtr exn);
+            
             [DllImport(Engine.LibraryName)]
-            [return: MarshalAs(UnmanagedType.U1)]
-            public static extern void wasmtime_exnref_unroot(ref ExnRef exnRef);
+            public static extern IntPtr wasmtime_context_set_exception(IntPtr context, IntPtr exn);
         }
 
         internal readonly Store? store;

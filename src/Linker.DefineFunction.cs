@@ -59,7 +59,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -159,7 +159,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -261,7 +261,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -365,7 +365,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -471,7 +471,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -579,7 +579,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -689,7 +689,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -801,7 +801,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -915,7 +915,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1031,7 +1031,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1149,7 +1149,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1269,7 +1269,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1391,7 +1391,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1492,7 +1492,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1594,7 +1594,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1698,7 +1698,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1804,7 +1804,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -1912,7 +1912,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2022,7 +2022,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2134,7 +2134,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2248,7 +2248,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2364,7 +2364,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2482,7 +2482,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2602,7 +2602,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2724,7 +2724,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2848,7 +2848,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -2951,7 +2951,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3055,7 +3055,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3161,7 +3161,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3269,7 +3269,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3379,7 +3379,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3491,7 +3491,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3605,7 +3605,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3721,7 +3721,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3839,7 +3839,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -3959,7 +3959,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4081,7 +4081,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4205,7 +4205,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4331,7 +4331,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4436,7 +4436,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4542,7 +4542,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4650,7 +4650,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4760,7 +4760,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4872,7 +4872,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -4986,7 +4986,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5102,7 +5102,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5220,7 +5220,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5340,7 +5340,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5462,7 +5462,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5586,7 +5586,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5712,7 +5712,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5840,7 +5840,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -5947,7 +5947,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6055,7 +6055,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6165,7 +6165,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6277,7 +6277,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6391,7 +6391,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6507,7 +6507,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6625,7 +6625,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6745,7 +6745,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6867,7 +6867,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -6991,7 +6991,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7117,7 +7117,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7245,7 +7245,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7375,7 +7375,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7474,7 +7474,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7575,7 +7575,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7678,7 +7678,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7783,7 +7783,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7890,7 +7890,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -7999,7 +7999,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8110,7 +8110,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8223,7 +8223,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8338,7 +8338,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8455,7 +8455,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8574,7 +8574,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8695,7 +8695,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8818,7 +8818,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -8919,7 +8919,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9022,7 +9022,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9127,7 +9127,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9234,7 +9234,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9343,7 +9343,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9454,7 +9454,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9567,7 +9567,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9682,7 +9682,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9799,7 +9799,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -9918,7 +9918,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10039,7 +10039,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10162,7 +10162,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10287,7 +10287,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10390,7 +10390,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10495,7 +10495,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10602,7 +10602,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10711,7 +10711,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10822,7 +10822,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -10935,7 +10935,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11050,7 +11050,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11167,7 +11167,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11286,7 +11286,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11407,7 +11407,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11530,7 +11530,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11655,7 +11655,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11782,7 +11782,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11887,7 +11887,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -11994,7 +11994,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12103,7 +12103,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12214,7 +12214,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12327,7 +12327,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12442,7 +12442,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12559,7 +12559,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12678,7 +12678,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12799,7 +12799,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -12922,7 +12922,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13047,7 +13047,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13174,7 +13174,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13303,7 +13303,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13410,7 +13410,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13519,7 +13519,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13630,7 +13630,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13743,7 +13743,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13858,7 +13858,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -13975,7 +13975,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14094,7 +14094,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14215,7 +14215,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14338,7 +14338,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14463,7 +14463,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14590,7 +14590,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14719,7 +14719,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
@@ -14850,7 +14850,7 @@ namespace Wasmtime
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
                 };
 
