@@ -487,7 +487,9 @@ namespace Wasmtime
             Exn = exn;
         }
 
+        /// <param name="trap"></param>
         /// <param name="exn">Ownership is taken</param>
+        /// <param name="context"></param>
         internal static WasmException FromTrapAndException(StoreContext context, IntPtr trap, IntPtr exn)
         {
             using var accessor = new TrapAccessor(trap);
