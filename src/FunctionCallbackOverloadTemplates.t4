@@ -79,7 +79,7 @@ void GenerateCallbackContent(bool hasCaller, int resultCount, int parameterCount
                     }
                     catch (Exception ex)
                     {
-                        return Function.HandleCallbackException(ex);
+                        return Function.HandleCallbackException(ex, new Caller(callerPtr));
                     }
 <#
 }
