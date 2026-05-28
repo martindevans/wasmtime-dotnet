@@ -802,10 +802,10 @@ namespace Wasmtime
             public static extern void wasmtime_exn_delete(IntPtr exn);
 
             [DllImport(Engine.LibraryName)]
-            public static extern ulong wasmtime_exn_field_count(IntPtr contex, IntPtr exn);
+            public static extern nuint wasmtime_exn_field_count(IntPtr contex, IntPtr exn);
 
             [DllImport(Engine.LibraryName)]
-            public static extern IntPtr wasmtime_exn_field(IntPtr contex, IntPtr exn, ulong index, out Value value);
+            public static extern IntPtr wasmtime_exn_field(IntPtr context, IntPtr exn, nuint index, out Value value);
             
             [DllImport(Engine.LibraryName)]
             [return: MarshalAs(UnmanagedType.U1)]
