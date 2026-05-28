@@ -8,10 +8,11 @@ namespace Wasmtime
     // in the Wasmtime API soon. The difference is the order of `Module` and `Instance`.
     internal enum WasmExternKind : byte
     {
-        Func,
-        Global,
-        Table,
-        Memory,
+        Func = 0,
+        Global = 1,
+        Table = 2,
+        Memory = 3,
+        Tag = 4,
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -41,7 +42,8 @@ namespace Wasmtime
                 var importType = this.data[i];
                 var externType = Native.wasm_importtype_type(importType);
 
-                switch ((WasmExternKind)ExportTypeArray.Native.wasm_externtype_kind(externType))
+                var kind = (WasmExternKind)ExportTypeArray.Native.wasm_externtype_kind(externType);
+                switch (kind)
                 {
                     case WasmExternKind.Func:
                         imports[i] = new FunctionImport(importType, externType);
@@ -59,8 +61,12 @@ namespace Wasmtime
                         imports[i] = new MemoryImport(importType, externType);
                         break;
 
+                    case WasmExternKind.Tag:
+                        imports[i] = new TagImport(importType, externType);
+                        break;
+
                     default:
-                        throw new NotSupportedException("Unsupported import extern type.");
+                        throw new NotSupportedException($"Unsupported import extern type: {kind}.");
                 }
             }
             return imports;
@@ -277,5 +283,30 @@ namespace Wasmtime
         /// The maximum number of elements in the table.
         /// </summary>
         public uint Maximum { get; private set; }
+    }
+
+    /// <summary>
+    /// Represents a tag imported to a WebAssembly module or instance.
+    /// </summary>
+    public class TagImport
+        : Import
+    {
+        private readonly IntPtr _tagType;
+        private readonly IntPtr _funcType;
+
+        internal TagImport(IntPtr exportType, IntPtr externType) : base(exportType)
+        {
+            _tagType = TagExport.Native.wasm_externtype_as_tagtype_const(externType);
+            if (_tagType == IntPtr.Zero)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _funcType = TagExport.Native.wasm_tagtype_functype(_tagType);
+            if (_funcType == IntPtr.Zero)
+            {
+                throw new InvalidOperationException();
+            }
+        }
     }
 }

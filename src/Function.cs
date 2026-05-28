@@ -2,7 +2,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -218,6 +217,8 @@ namespace Wasmtime
             // (by checking that we are not a null function reference).
             var results = argsAndResults[..Results.Count];
             return factory.Create(storeContext, store!, trap, results);
+            
+            // todo add exception handling to factory
         }
 
         /// <summary>
@@ -233,7 +234,17 @@ namespace Wasmtime
 
             if (trap != IntPtr.Zero)
             {
-                throw TrapException.FromOwnedTrap(trap);
+                try
+                {
+                    if (Native.wasmtime_context_take_exception(storeContext.handle, out var exception))
+                        throw WasmException.FromTrapAndException(trap, exception);
+
+                    throw TrapException.FromOwnedTrap(trap);
+                }
+                finally
+                {
+                    GC.KeepAlive(store);
+                }
             }
         }
 
@@ -269,6 +280,7 @@ namespace Wasmtime
         /// Invokes the Wasmtime function.
         /// </summary>
         /// <param name="arguments">The arguments to pass to the function, wrapped in `ValueBox`</param>
+        /// <exception cref="TrapException">Thrown if a wasm trap occurs.</exception>
         /// <returns>
         ///   Returns null if the function has no return value.
         ///   Returns the value if the function returns a single value.
@@ -320,7 +332,17 @@ namespace Wasmtime
                 var trap = Invoke(args, resultsSpan);
                 if (trap != IntPtr.Zero)
                 {
-                    throw TrapException.FromOwnedTrap(trap);
+                    try
+                    {
+                        if (Native.wasmtime_context_take_exception(store.Context.handle, out var exception))
+                            throw WasmException.FromTrapAndException(trap, exception);
+
+                        throw TrapException.FromOwnedTrap(trap);
+                    }
+                    finally
+                    {
+                        GC.KeepAlive(store);
+                    }
                 }
 
                 if (Results.Count == 0)
@@ -766,12 +788,23 @@ namespace Wasmtime
             [DllImport(Engine.LibraryName)]
             public static extern unsafe ValueTypeArray* wasm_functype_results(IntPtr type);
 
-
             [DllImport(Engine.LibraryName)]
             public static extern void wasm_functype_delete(IntPtr functype);
 
             [DllImport(Engine.LibraryName)]
-            public static unsafe extern IntPtr wasmtime_trap_new(byte* bytes, nuint len);
+            public static extern unsafe IntPtr wasmtime_trap_new(byte* bytes, nuint len);
+            
+            [DllImport(Engine.LibraryName)]
+            [return: MarshalAs(UnmanagedType.U1)]
+            public static extern bool wasmtime_context_has_exception(IntPtr context);
+
+            [DllImport(Engine.LibraryName)]
+            [return: MarshalAs(UnmanagedType.U1)]
+            public static extern bool wasmtime_context_take_exception(IntPtr context, out ExnRef exnRef);
+
+            [DllImport(Engine.LibraryName)]
+            [return: MarshalAs(UnmanagedType.U1)]
+            public static extern void wasmtime_exnref_unroot(ref ExnRef exnRef);
         }
 
         internal readonly Store? store;

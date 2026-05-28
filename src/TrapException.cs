@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Wasmtime
@@ -463,6 +462,119 @@ namespace Wasmtime
             [DllImport(Engine.LibraryName)]
             [return: MarshalAs(UnmanagedType.I1)]
             internal static extern bool wasmtime_trap_code(IntPtr trap, out byte exitCode);
+        }
+    }
+
+    /// <summary>
+    /// An exception thrown from inside WASM
+    /// </summary>
+    [Serializable]
+    public class WasmException
+        : WasmtimeException
+    {
+        /// <summary>
+        /// Values retrieved from the thrown exception
+        /// </summary>
+        public IReadOnlyDictionary<UIntPtr, object?> Values { get; }
+
+        internal WasmException(string message, List<TrapFrame> frames, Dictionary<nuint, object?> values)
+            : base(message)
+        {
+            Frames = frames;
+            Values = values;
+        }
+
+        internal static WasmException FromTrapAndException(IntPtr trap, ExnRef exnRef)
+        {
+            using var accessor = new TrapAccessor(trap);
+
+            var values = new Dictionary<nuint, object?>();
+
+            //todo: current wasmtime.dll does not export this???
+            //var count = ExnRef.Native.wasmtime_exnref_field_count(store.Context.handle, ref exnRef);
+            //for (nuint i = 0; i < count; i++)
+            //{
+            //    var error = ExnRef.Native.wasmtime_exnref_field(store.Context.handle, ref exnRef, i, out var value);
+            //    if (error == IntPtr.Zero)
+            //    {
+            //        var obj = value.ToObject(store);
+            //        values.Add(i, obj);
+            //    }
+            //    else
+            //    {
+            //        throw WasmtimeException.FromOwnedError(error);
+            //    }
+            //}
+
+            return new WasmException(accessor.Message, accessor.GetFrames(), values);
+        }
+    }
+
+    /// <summary>
+    /// wasmtime_exnref struct: https://docs.wasmtime.dev/c-api/structwasmtime__exnref.html
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct ExnRef
+    {
+        [FieldOffset(0)]
+        public ulong store;
+
+        [FieldOffset(8)]
+        public uint __private1;
+
+        [FieldOffset(12)]
+        public uint __private2;
+
+        [FieldOffset(16)]
+        public nuint __private3;
+
+        public static class Native
+        {
+            /// <summary>
+            /// Returns the type of the specified exnref.
+            /// If exnref is NULL or represents ref.null exn, then NULL is returned. Otherwise the type of this value is returned. Callers must delete the returned value. 
+            /// </summary>
+            /// <param name="context"></param>
+            /// <param name="exn"></param>
+            /// <returns></returns>
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasmtime_exnref_type(IntPtr context, in ExnRef exn);
+
+            /// <summary>
+            /// Returns the number of fields in this exception.
+            /// </summary>
+            /// <param name="context"></param>
+            /// <param name="exn"></param>
+            /// <returns></returns>
+            [DllImport(Engine.LibraryName)]
+            public static extern nuint wasmtime_exnref_field_count(IntPtr context, ref ExnRef exn);
+
+            /// <summary>
+            /// Reads a field value from this exception by index. 
+            /// </summary>
+            /// <param name="context"></param>
+            /// <param name="exn"></param>
+            /// <param name="index"></param>
+            /// <param name="value"></param>
+            /// <returns>NULL on success, or an error if the index is out of bounds. </returns>
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasmtime_exnref_field(IntPtr context, ref ExnRef exn, nuint index, out Value value);
+
+            /// <summary>
+            /// Deletes an exception type. 
+            /// </summary>
+            /// <param name="type"></param>
+            /// <returns></returns>
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasmtime_exn_type_delete(IntPtr type);
+
+            /// <summary>
+            /// Returns tag type associated with this exception type. 
+            /// </summary>
+            /// <param name="type"></param>
+            /// <returns></returns>
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasmtime_exn_type_tag_type(IntPtr type);
         }
     }
 }

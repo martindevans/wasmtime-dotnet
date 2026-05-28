@@ -28,7 +28,8 @@ namespace Wasmtime
                 var exportType = this.data[i];
                 var externType = Native.wasm_exporttype_type(exportType);
 
-                switch ((WasmExternKind)Native.wasm_externtype_kind(externType))
+                var kind = (WasmExternKind)Native.wasm_externtype_kind(externType);
+                switch (kind)
                 {
                     case WasmExternKind.Func:
                         exports[i] = new FunctionExport(exportType, externType);
@@ -46,8 +47,12 @@ namespace Wasmtime
                         exports[i] = new MemoryExport(exportType, externType);
                         break;
 
+                    case WasmExternKind.Tag:
+                        exports[i] = new TagExport(exportType, externType);
+                        break;
+
                     default:
-                        throw new NotSupportedException("Unsupported export extern type.");
+                        throw new NotSupportedException($"Unsupported export extern type: {kind}.");
                 }
             }
 
@@ -269,6 +274,40 @@ namespace Wasmtime
         {
             [DllImport(Engine.LibraryName)]
             public static extern IntPtr wasm_externtype_as_tabletype_const(IntPtr type);
+        }
+    }
+
+    /// <summary>
+    /// Represents a tag exported from a WebAssembly module or instance.
+    /// </summary>
+    public class TagExport
+        : Export
+    {
+        private readonly IntPtr _tagType;
+        private readonly IntPtr _funcType;
+
+        internal TagExport(IntPtr exportType, IntPtr externType) : base(exportType)
+        {
+            _tagType = Native.wasm_externtype_as_tagtype_const(externType);
+            if (_tagType == IntPtr.Zero)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _funcType = Native.wasm_tagtype_functype(_tagType);
+            if (_funcType == IntPtr.Zero)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        internal static class Native
+        {
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasm_externtype_as_tagtype_const(IntPtr type);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern IntPtr wasm_tagtype_functype(IntPtr tagType);
         }
     }
 }

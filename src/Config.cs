@@ -130,6 +130,17 @@ namespace Wasmtime
         }
 
         /// <summary>
+        /// Configures whether the WebAssembly exceptions proposal is enabled.
+        /// </summary>
+        /// <param name="enable">True to enable exceptions or false to disable.</param>
+        /// <returns>Returns the current config.</returns>
+        public Config WithExceptions(bool enable)
+        {
+            Native.wasmtime_config_wasm_exceptions_set(handle, enable);
+            return this;
+        }
+
+        /// <summary>
         /// Sets whether the WebAssembly GC proposal is enabled. 
         /// </summary>
         /// <param name="enable">True to enable GC or false to disable.</param>
@@ -264,7 +275,7 @@ namespace Wasmtime
         /// <returns>Returns the current config.</returns>
         private Config WithStackSwitching(bool enable)
         {
-            // todo: unlikely to be compatible with wasmtime-dotnet on Windows due to threads
+            // warning: **unlikely to be compatible with wasmtime-dotnet on Windows due to fibers**
 
             Native.wasmtime_config_wasm_stack_switching_set(handle, enable);
             return this;
@@ -448,7 +459,7 @@ namespace Wasmtime
         /// <returns>Returns the current config.</returns>
         public Config WithMacosMachPorts(bool enable)
         {
-            Native.wasmtime_config_macos_use_mach_ports(handle, enable);
+            Native.wasmtime_config_macos_use_mach_ports_set(handle, enable);
             return this;
         }
 
@@ -488,6 +499,65 @@ namespace Wasmtime
         public Config WithComponentModel(bool enabled)
         {
             Native.wasmtime_config_wasm_component_model_set(NativeHandle, enabled);
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether support for concurrent execution of WebAssembly is supported within this store. For more
+        /// information see the Rust documentation at
+        /// <a href="https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.concurrency_support">https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.concurrency_support</a>
+        /// </summary>
+        /// <param name="enabled">True to enable concurrency or false to disable.</param>
+        /// <returns></returns>
+        private Config WithConcurrencySupport(bool enabled)
+        {
+            // todo: this remains private until support for concurrency is fully validated within wasmtime-dotnet
+            
+            Native.wasmtime_config_concurrency_support_set(NativeHandle, enabled);
+            return this;
+        }
+
+        /// <summary>
+        /// Enables a target-specific flag in Cranelift. This can be used, for example, to enable SSE4.2 on x86_64 hosts.
+        /// Settings can be explored with wasmtime settings on the CLI. For more
+        /// information see the Rust documentation at
+        /// <a href="https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.cranelift_flag_enable">https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.cranelift_flag_enable</a>
+        /// </summary>
+        /// <param name="flag">The flag to set.</param>
+        /// <returns></returns>
+        public Config WithCraneliftFlag(string flag)
+        {
+            Native.wasmtime_config_cranelift_flag_enable(NativeHandle, flag);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets a target-specific flag in Cranelift to the specified value. This can be used, for example, to enable SSE4.2 on x86_64 hosts.
+        /// Settings can be explored with wasmtime settings on the CLI. For more
+        /// information see the Rust documentation at
+        /// <a href="https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.cranelift_flag_set">https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.cranelift_flag_set</a>
+        /// </summary>
+        /// <param name="key">The key to set.</param>
+        /// <param name="value">The value for this key.</param>
+        /// <returns></returns>
+        public Config WithCraneliftFlag(string key, string value)
+        {
+            Native.wasmtime_config_cranelift_flag_set(NativeHandle, key, value);
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the target triple that this configuration will produce machine code for. This option defaults to the native host.
+        /// Calling this method will additionally disable inference of the native features of the host (e.g. detection of SSE4.2 on x86_64 hosts).
+        /// Native features can be reenabled with the cranelift_flag_{set,enable} properties. For more
+        /// information see the Rust documentation at
+        /// <a href="https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.config">https://docs.wasmtime.dev/api/wasmtime/struct.Config.html#method.config</a>
+        /// </summary>
+        /// <param name="triple">Target trupe to produce machine code for.</param>
+        /// <returns></returns>
+        public Config WithCompilationTarget(string triple)
+        {
+            Native.wasmtime_config_target_set(NativeHandle, triple);
             return this;
         }
 
@@ -627,12 +697,81 @@ namespace Wasmtime
             public static extern IntPtr wasmtime_config_cache_config_load(Handle config, [MarshalAs(Extensions.LPUTF8Str)] string? path);
 
             [DllImport(Engine.LibraryName)]
-            public static extern void wasmtime_config_macos_use_mach_ports(Handle config, [MarshalAs(UnmanagedType.I1)] bool enable);
+            public static extern void wasmtime_config_macos_use_mach_ports_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool enable);
 
             [DllImport(Engine.LibraryName)]
             public static extern void wasmtime_config_wasm_component_model_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+            
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_concurrency_support_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
 
-            // todo: void wasmtime_config_host_memory_creator_set(wasm_config_t *, wasmtime_memory_creator_t *)
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_cranelift_flag_enable(Handle config, [MarshalAs(Extensions.LPUTF8Str)] string flag);
+
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_cranelift_flag_set(Handle config, [MarshalAs(Extensions.LPUTF8Str)] string key, [MarshalAs(Extensions.LPUTF8Str)] string value);
+
+            //todo: no managed wrapper method for this
+            //[DllImport(Engine.LibraryName)]
+            //public static extern void wasmtime_config_cranelift_regalloc_algorithm_set(Handle config, wasmtime_regalloc_algorithm_t algorithm);
+
+            //todo: no managed wrapper method for this - how does this interact with wasmtime_config_wasm_gc_set
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_gc_support_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+
+            //todo: no managed wrapper method for this
+            //[DllImport(Engine.LibraryName)]
+            //public static extern void wasmtime_config_host_memory_creator_set(Handle config, wasmtime_memory_creator_t*)
+
+            //todo: no managed wrapper method for this
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_shared_memory_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+
+            //todo: no managed wrapper method for this
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_signals_based_traps_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+            
+            //todo: no managed wrapper method for this
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_wasm_custom_page_sizes_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+            
+            //todo: no managed wrapper method for this
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_wasm_exceptions_set(Handle config, [MarshalAs(UnmanagedType.I1)] bool value);
+
+            //todo: no managed wrapper method for this
+            [DllImport(Engine.LibraryName)]
+            public static extern void wasmtime_config_target_set(Handle config, [MarshalAs(Extensions.LPUTF8Str)] string triple);
+
+            //todo:allocation
+            //public static extern void wasmtime_pooling_allocation_config_linear_memory_keep_resident_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_decommit_batch_size_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_async_stack_keep_resident_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_component_instance_size_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_core_instance_size_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_core_instances_per_component_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_memories_per_component_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_memories_per_module_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_memory_size_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_tables_per_component_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_tables_per_module_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_max_unused_warm_slots_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_table_elements_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_table_keep_resident_set(wasmtime_pooling_allocation_config_t* config, nuint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_component_instances_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_core_instances_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_gc_heaps_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_memories_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_stacks_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_config_total_tables_set(wasmtime_pooling_allocation_config_t* config, uint value);
+            //public static extern void wasmtime_pooling_allocation_strategy_set(Handle config, wasmtime_pooling_allocation_config_t* value);
+
+            //todo:components
+            //wasmtime_config_wasm_component_model_async_set
+            //wasmtime_config_wasm_component_model_async_stackful_set
+            //wasmtime_config_wasm_component_model_map_set
+            //wasmtime_config_wasm_component_model_more_async_builtins_set
+            //wasmtime_config_wasm_component_model_set
         }
 
         private readonly Handle handle;
