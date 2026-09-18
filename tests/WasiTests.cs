@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Wasmtime.Tests
 {
-    public class WasiTests
+    public sealed class WasiTests
     {
         [Theory]
         [InlineData("Wasi.wat")]
@@ -287,7 +287,7 @@ namespace Wasmtime.Tests
             using var file = new TempFile();
 
             var config = new WasiConfiguration()
-                .WithPreopenedDirectory(Path.GetDirectoryName(file.Path), "/foo", WasiDirectoryPermissions.Read | WasiDirectoryPermissions.Write, WasiFilePermissions.Read | WasiFilePermissions.Write);
+                .WithPreopenedDirectory(Path.GetDirectoryName(file.Path)!, "/foo", mutable:true);
 
             using var engine = new Engine();
             using var module = Module.FromTextFile(engine, Path.Combine("Modules", path));
