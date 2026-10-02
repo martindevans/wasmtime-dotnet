@@ -1,11 +1,12 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
+using Microsoft.Win32.SafeHandles;
 
 namespace Wasmtime.Components;
 
 /// <summary>
-/// Representation of a component in the component model. 
+/// Representation of a component in the component model.
 /// </summary>
 public class Component
     : IDisposable
@@ -65,7 +66,44 @@ public class Component
     }
 
     /// <summary>
-    /// This function serializes compiled component artifacts as blob data. 
+    /// Creates a <see cref="Component"/> based on a WebAssembly text format representation.
+    /// </summary>
+    /// <param name="engine">The engine to use for the component.</param>
+    /// <param name="text">The WebAssembly text format representation of the component.</param>
+    /// <returns>Returns a new <see cref="Component"/>.</returns>
+    public static Component FromText(Engine engine, string text)
+    {
+        if (engine is null)
+        {
+            throw new ArgumentNullException(nameof(engine));
+        }
+
+        if (text is null)
+        {
+            throw new ArgumentNullException(nameof(text));
+        }
+
+        unsafe
+        {
+            var textBytes = Encoding.UTF8.GetBytes(text);
+            fixed (byte* ptr = textBytes)
+            {
+                var error = Module.Native.wasmtime_wat2wasm(ptr, (nuint)textBytes.Length, out var componentBytes);
+                if (error != IntPtr.Zero)
+                {
+                    throw WasmtimeException.FromOwnedError(error);
+                }
+
+                using (componentBytes)
+                {
+                    return FromBytes(engine, new ReadOnlySpan<byte>(componentBytes.data, checked((int)componentBytes.size)));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// This function serializes compiled component artifacts as blob data.
     /// </summary>
     /// <returns>If the conversion is successful, the serialized compiled component.</returns>
     public byte[] Serialize()
