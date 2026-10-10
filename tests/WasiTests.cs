@@ -70,7 +70,7 @@ namespace Wasmtime.Tests
 
             for (int i = 0; i < env.Count; ++i)
             {
-                var kvp = memory.ReadNullTerminatedString(memory.ReadInt32(i * 4)).Split("=");
+                var kvp = memory.ReadNullTerminatedString(memory.ReadInt32(i * 4)).Split('=');
                 Assert.Equal(env[kvp[0]], kvp[1]);
             }
         }

@@ -16,50 +16,86 @@ namespace Wasmtime
 
 #if NETSTANDARD2_0
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe string GetString(this Encoding encoding, Span<byte> bytes)
+        public static string GetString(this Encoding encoding, Span<byte> bytes)
         {
-            fixed (byte* bytesPtr = bytes)
+            unsafe
             {
-                return encoding.GetString(bytesPtr, bytes.Length);
+                fixed (byte* bytesPtr = bytes)
+                {
+                    if (bytesPtr == null)
+                        throw new ArgumentNullException(nameof(bytes));
+
+                    return encoding.GetString(bytesPtr, bytes.Length);
+                }
             }
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe string GetString(this Encoding encoding, ReadOnlySpan<byte> bytes)
+        public static string GetString(this Encoding encoding, ReadOnlySpan<byte> bytes)
         {
-            fixed (byte* bytesPtr = bytes)
+            unsafe
             {
-                return encoding.GetString(bytesPtr, bytes.Length);
+                fixed (byte* bytesPtr = bytes)
+                {
+                    if (bytesPtr == null)
+                        throw new ArgumentNullException(nameof(bytes));
+
+                    return encoding.GetString(bytesPtr, bytes.Length);
+                }
             }
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe int GetBytes(this Encoding encoding, Span<char> chars, Span<byte> bytes)
+        public static int GetBytes(this Encoding encoding, Span<char> chars, Span<byte> bytes)
         {
-            fixed (char* charsPtr = chars)
-            fixed (byte* bytesPtr = bytes)
+            unsafe
             {
-                return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                fixed (char* charsPtr = chars)
+                fixed (byte* bytesPtr = bytes)
+                {
+                    if (charsPtr == null)
+                        throw new ArgumentNullException(nameof(chars));
+                    if (bytesPtr == null)
+                        throw new ArgumentNullException(nameof(bytes));
+
+                    return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                }
             }
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe int GetBytes(this Encoding encoding, ReadOnlySpan<char> chars, Span<byte> bytes)
+        public static int GetBytes(this Encoding encoding, ReadOnlySpan<char> chars, Span<byte> bytes)
         {
-            fixed (char* charsPtr = chars)
-            fixed (byte* bytesPtr = bytes)
+            unsafe
             {
-                return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                fixed (char* charsPtr = chars)
+                fixed (byte* bytesPtr = bytes)
+                {
+                    if (charsPtr == null)
+                        throw new ArgumentNullException(nameof(chars));
+                    if (bytesPtr == null)
+                        throw new ArgumentNullException(nameof(bytes));
+
+                    return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                }
             }
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe int GetBytes(this Encoding encoding, string chars, Span<byte> bytes)
+        public static int GetBytes(this Encoding encoding, string chars, Span<byte> bytes)
         {
-            fixed (char* charsPtr = chars)
-            fixed (byte* bytesPtr = bytes)
+            unsafe
             {
-                return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                fixed (char* charsPtr = chars)
+                fixed (byte* bytesPtr = bytes)
+                {
+                    if (charsPtr == null)
+                        throw new ArgumentNullException(nameof(chars));
+                    if (bytesPtr == null)
+                        throw new ArgumentNullException(nameof(bytes));
+
+                    return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
+                }
             }
         }
 #endif
